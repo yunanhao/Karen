@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Build;
@@ -369,7 +370,7 @@ final class UtilsActivityLifecycleImpl implements Application.ActivityLifecycleC
         }
         try {
             //noinspection JavaReflectionMemberAccess
-            Field sDurationScaleField = ValueAnimator.class.getDeclaredField("sDurationScale");
+            @SuppressLint("SoonBlockedPrivateApi") Field sDurationScaleField = ValueAnimator.class.getDeclaredField("sDurationScale");
             sDurationScaleField.setAccessible(true);
             //noinspection ConstantConditions
             float sDurationScale = (Float) sDurationScaleField.get(null);

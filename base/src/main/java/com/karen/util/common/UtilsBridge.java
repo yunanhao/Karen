@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -426,6 +427,7 @@ class UtilsBridge {
     ///////////////////////////////////////////////////////////////////////////
     // PermissionUtils
     ///////////////////////////////////////////////////////////////////////////
+    @SuppressLint("WrongConstant")
     static boolean isGranted(final String... permissions) {
         return PermissionUtils.isGranted(permissions);
     }
