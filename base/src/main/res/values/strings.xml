@@ -1,0 +1,6 @@
+<resources>
+    <string name="base_app_name">Karen</string>
+    <string name="base_confirm">确认</string>
+    <string name="base_cancel">取消</string>
+    <string name="base_tip">提示</string>
+</resources>
