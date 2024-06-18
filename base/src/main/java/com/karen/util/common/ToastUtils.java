@@ -2,6 +2,7 @@ package com.karen.util.common;
 
 import java.lang.reflect.Field;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -27,7 +28,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.karen.base.R;
+
+import com.example.base.R;
 
 /**
  * <pre>
@@ -363,6 +365,7 @@ public final class ToastUtils {
             super(toast);
         }
 
+        @SuppressLint("WrongConstant")
         @Override
         public void show() {
             if (mToast == null) { return; }
