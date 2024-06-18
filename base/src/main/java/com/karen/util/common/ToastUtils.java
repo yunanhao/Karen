@@ -34,7 +34,7 @@ import com.example.base.R;
 /**
  * <pre>
  *     author: Blankj
- *     blog  : http://blankj.com
+ *     blog  : <a href="http://blankj.com">...</a>
  *     time  : 2016/09/29
  *     desc  : utils about toast
  * </pre>
@@ -267,22 +267,19 @@ public final class ToastUtils {
 
     private static void show(@Nullable final View view, final CharSequence text,
                              final int duration) {
-        UtilsBridge.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                cancel();
-                iToast = newToast();
-                if (view != null) {
-                    iToast.setView(view);
-                } else {
-                    iToast.setMsgView(text);
-                }
-                iToast.setDuration(duration);
-                if (sGravity != -1 || sXOffset != -1 || sYOffset != -1) {
-                    iToast.setGravity(sGravity, sXOffset, sYOffset);
-                }
-                iToast.show();
+        UtilsBridge.runOnUiThread(() -> {
+            cancel();
+            iToast = newToast();
+            if (view != null) {
+                iToast.setView(view);
+            } else {
+                iToast.setMsgView(text);
             }
+            iToast.setDuration(duration);
+            if (sGravity != -1 || sXOffset != -1 || sYOffset != -1) {
+                iToast.setGravity(sGravity, sXOffset, sYOffset);
+            }
+            iToast.show();
         });
     }
 
@@ -333,7 +330,7 @@ public final class ToastUtils {
         }
 
         static class SafeHandler extends Handler {
-            private Handler impl;
+            private final Handler impl;
 
             SafeHandler(Handler impl) {
                 this.impl = impl;
@@ -359,7 +356,7 @@ public final class ToastUtils {
 
         private WindowManager mWM;
 
-        private WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+        private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
 
         ToastWithoutNotification(Toast toast) {
             super(toast);
@@ -406,12 +403,7 @@ public final class ToastUtils {
 
             final long duration = mToast.getDuration() == Toast.LENGTH_SHORT ? 2000 : 3500;
             if (isActivityContext) {
-                UtilsBridge.runOnUiThreadDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        setToast(duration);
-                    }
-                }, 300);
+                UtilsBridge.runOnUiThreadDelayed(() -> setToast(duration), 300);
             } else {
                 setToast(duration);
             }
@@ -449,12 +441,7 @@ public final class ToastUtils {
                 }
             } catch (Exception ignored) {/**/}
 
-            UtilsBridge.runOnUiThreadDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    cancel();
-                }
-            }, duration);
+            UtilsBridge.runOnUiThreadDelayed(this::cancel, duration);
         }
 
         private Utils.ActivityLifecycleCallbacks getActivityLifecycleCallbacks() {
