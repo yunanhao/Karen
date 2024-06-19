@@ -1,9 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id 'org.jetbrains.kotlin.kapt'
 }
 
 android {
+    signingConfigs {
+        release {
+        }
+    }
     namespace 'com.example.karen'
     compileSdk 34
 
@@ -31,7 +36,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
-        viewBinding true
+        dataBinding true
     }
 }
 
@@ -43,6 +48,9 @@ dependencies {
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.androidx.navigation.ui.ktx
+    implementation project(':common')
+    implementation project(':base')
+    implementation libs.androidx.activity
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

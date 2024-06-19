@@ -1,5 +1,7 @@
 package com.karen.util.common;
 
+import android.util.Log;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -16,16 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import android.util.Log;
-
-/**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2018/10/02
- *     desc  : utils about bus
- * </pre>
- */
 public final class BusUtils {
 
     private static final Object NULL = "nULl";
@@ -242,9 +234,7 @@ public final class BusUtils {
             } else {
                 return Class.forName(busInfo.className).getDeclaredMethod(busInfo.funName, getClassName(busInfo.paramType));
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
             e.printStackTrace();
         }
         return null;
