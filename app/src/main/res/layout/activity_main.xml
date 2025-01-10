@@ -15,6 +15,38 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/blue_a700">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/teal_a400"
+                android:padding="8dp">
+
+                <com.example.karen.view.CustomEllipsizeTextView
+                    android:id="@+id/mytext"
+                    android:layout_width="match_parent"
+                    android:ellipsize="end"
+                    android:padding="6dp"
+                    android:maxLines="2"
+                    android:layout_height="wrap_content"
+                    android:background="#fff" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/teal_a400"
+                android:padding="8dp">
+
+
+            </FrameLayout>
+        </LinearLayout>
     </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
