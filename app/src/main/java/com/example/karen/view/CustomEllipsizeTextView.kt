@@ -11,68 +11,50 @@ class CustomEllipsizeTextView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : AppCompatTextView(context, attrs, defStyleAttr) {
+
     companion object {
         const val TEXT_MORE = "\u200B 展開"
+        const val ELLIPSIS = "…"
+        const val GAP_MARK = "\u00A0\u00A0"
     }
 
     var isEllipsisCounted: Boolean = false
-
     private val sb = StringBuilder()
 
     private fun setLabelAfterEllipsis() {
-        StaticLayout.Builder
+        if (maxLines == Int.MAX_VALUE || width == 0) return
+        val lineCount = StaticLayout.Builder
             .obtain(text, 0, text.length, paint, width)
             .setAlignment(Layout.Alignment.ALIGN_NORMAL)
             .setLineSpacing(lineSpacingExtra, lineSpacingMultiplier)
             .setIncludePad(includeFontPadding)
-            .build()
-        if (maxLines == Int.MAX_VALUE) return
-        val ellipsisCount = layout.getEllipsisCount(maxLines - 1)
-        if (ellipsisCount == 0) return
-        val start = layout.getLineStart(0)
-        val end = layout.getLineEnd(lineCount - 1) - ellipsisCount
-        if (start < 0) return
-        if (start >= end) return
-        val baseText = text.toString().trimStart().replace("\n", "\uFEFF")
+            .build().lineCount
+        if (lineCount <= maxLines) return // 没有超出最大行数
         sb.clear()
-        if (baseText.isBlank()) {
-            text = sb
+        sb.append(text.toString().trimStart().replace(Regex("\\n"), " "))
+        if (sb.isEmpty()) {
+            text = null
             return
         }
-        if (baseText.length < end) return
-        sb.append(baseText.substring(start, end))
-        while (sb.lastOrNull()?.isWhitespace() == true) {
-            sb.deleteRange(sb.length - 1, sb.length)
-        }
-
-        val cutMark = "……"
-        val markWidth = paint.measureText(cutMark)
-        val gapMark = "\u00A0\u00A0"
-        val gapWidth = paint.measureText(gapMark)
+        // 添加省略号和更多标记
+        val ellipsisWidth = paint.measureText(ELLIPSIS)
         val textMoreWidth = paint.measureText(TEXT_MORE)
-        var totalWidth = paint.measureText(sb.toString()) + markWidth + gapWidth + textMoreWidth
+        val gapWidth = paint.measureText(GAP_MARK)
 
-        while (totalWidth >= maxLines * width) {
-            sb.deleteRange(sb.length - 1, sb.length)
-            totalWidth = paint.measureText(sb.toString()) + markWidth + gapWidth + textMoreWidth
+        var totalWidth =
+            paint.measureText(sb.toString()) + ellipsisWidth + gapWidth + textMoreWidth * 2
+        while (totalWidth >= width * maxLines && sb.isNotEmpty()) {
+            sb.deleteCharAt(sb.length - 1)
+            totalWidth =
+                paint.measureText(sb.toString()) + ellipsisWidth + gapWidth + textMoreWidth * 2
         }
-        sb.append(cutMark)
+        sb.append(ELLIPSIS)
         totalWidth = paint.measureText(sb.toString()) + gapWidth + textMoreWidth
-        for (i in 1..maxLines) {
-            if (totalWidth + gapWidth < i * width) {
-                do {
-                    sb.append(gapMark)
-                    totalWidth = if (i == maxLines) {
-                        paint.measureText(sb.toString()) + markWidth + gapWidth + textMoreWidth
-                    } else {
-                        paint.measureText(sb.toString()) + markWidth + gapWidth
-                    }
-                } while (totalWidth + gapWidth < i * width)
-                if (i != maxLines) {
-                    sb.append('\n')
-                    totalWidth = paint.measureText(sb.toString()) + markWidth + gapWidth
-                }
-            }
+        if (totalWidth + gapWidth < maxLines * width) {
+            do {
+                sb.append(GAP_MARK)
+                totalWidth += gapWidth
+            } while (totalWidth + gapWidth * 4 < width)
         }
         sb.append(TEXT_MORE)
         text = sb
@@ -82,6 +64,5 @@ class CustomEllipsizeTextView @JvmOverloads constructor(
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         setLabelAfterEllipsis()
-
     }
 }

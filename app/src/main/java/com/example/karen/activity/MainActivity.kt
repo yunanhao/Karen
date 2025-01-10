@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val v1 = findViewById<CustomEllipsizeTextView>(R.id.mytext)
+        val v1 = findViewById<TextView>(R.id.mytext)
         testText(v1)
 
         findViewById<FloatingActionButton>(R.id.fab)
@@ -55,21 +55,20 @@ class MainActivity : AppCompatActivity() {
                         "通过 SpannableString 实现“展开”的点击效果。\n" +
                         "完整代码实现"
             )
-            setText(
-                "实现步骤\n" +
-                        "    创建自定义 TextView\n" +
-                        "\n" +
-                        "使用 Layout 和 StaticLayout 判断文本是否超过两行。\n" +
-                        "如果文本超过两行，手动处理显示内容，裁剪到两行并在末尾添加“展开”。\n" +
-                        "通过 SpannableString 实现“展开”的点击效果。\n" +
-                        "完整代码实现"
-            )
 //            setText(
-//                        "使用 Layout 和 StaticLayout 判断文本是否超过两行如果文本超过两行，手动处理显示内容，裁剪到两行并在末尾添加“展开”通过 SpannableString 实现“展开”的点击效果。\n" +
+//                "实现步骤\n" +
+//                        "    创建自定义 TextView\n" +
+//                        "\n" +
+//                        "使用 Layout 和 StaticLayout 判断文本是否超过两行。\n" +
+//                        "如果文本超过两行，手动处理显示内容，裁剪到两行并在末尾添加“展开”。\n" +
+//                        "通过 SpannableString 实现“展开”的点击效果。\n" +
 //                        "完整代码实现"
 //            )
+//            setText("在卡牌游戏中，光环效果和叠甲（也称为护甲、护盾等）的优先级和相互作用是设计中重要的机制。这些机制的优先级和叠加规则通常根据游戏的具体设计而定，但以下是一些常见的处理方式：1. 光环效果优先级光环效果通常指影响特定区域内单位的持续性效果，这些效果可能会增加或减少属性，赋予特定能力等。其优先级规则通常如下：")
 //            setText("\n\n\n\n\n")
-//            setText("\n整代\n整代\n整代\n整代")
+            setText("\n整代\n整代\n整代\n整代")
+//            setText("あけましておめでとうございます\uD83C\uDF8D❤\uFE0F\n" +
+//                    "2025年もヨロシク\uD83D\uDE1A✌\uD83C\uDFFB#推しFANTASY#推しFANTASYスペシャル#年越し#初詣#お正月#wasai")
         }
     }
 
