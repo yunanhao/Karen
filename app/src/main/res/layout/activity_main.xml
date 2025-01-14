@@ -25,7 +25,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_a400"
+                android:background="@color/base_blueDarker_200"
                 android:padding="8dp">
 
                 <com.example.karen.view.ExpandableTextView
@@ -40,11 +40,54 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_a400"
+                android:background="@color/base_blueDarker_200"
                 android:padding="8dp">
 
+                <com.example.karen.view.CustomEllipsizeTextView2
+                    android:id="@+id/myPanel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="2"
+                        android:text="asdada\nsdas"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="… 展开"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/content"
+                        app:layout_constraintEnd_toEndOf="@id/content" />
+                </com.example.karen.view.CustomEllipsizeTextView2>
 
             </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/myView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base_blueDarker_200"
+                android:padding="8dp" />
+
+            <FrameLayout
+                android:id="@+id/myView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base_blueDarker_200"
+                android:padding="8dp" />
         </LinearLayout>
     </FrameLayout>
 

@@ -8,14 +8,20 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.karen.R
 import com.example.karen.adapter.MyAdapter
 import com.example.karen.bean.ImageFileBean
 import com.example.karen.view.ExpandableTextView
+import com.example.karen.view.MyConstraintLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -56,6 +62,280 @@ class MainActivity : AppCompatActivity() {
 
 
             }
+        x1()
+        findViewById<ViewGroup>(R.id.myView3).addView(createMyView3(this))
+        findViewById<ViewGroup>(R.id.myView4).addView(createMyView4(this))
+    }
+
+    fun createMyView3(context: Context): ConstraintLayout {
+        // 创建 ConstraintLayout 容器
+        val constraintLayout = ConstraintLayout(context).apply {
+            id = ConstraintLayout.generateViewId()
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+        // 创建 content TextView
+        val contentTextView = TextView(context).apply {
+            id = TextView.generateViewId()
+            text = "asdadaretarettreterta\nsdaadfsdfsdgfdgdfgdaergs"
+            textSize = 15f
+            setBackgroundColor(ContextCompat.getColor(context, android.R.color.white))
+            maxLines = 2
+            ellipsize = android.text.TextUtils.TruncateAt.END
+            setLineSpacing(4f, 1f)
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6)
+            )
+        }
+
+        // 创建 more TextView
+        val moreTextView = TextView(context).apply {
+            id = TextView.generateViewId()
+            text = "… 展开"
+            textSize = 16f
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.dp_2),
+                0,
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6)
+            )
+            var isExpanded = false
+            setOnClickListener {
+                isExpanded = !isExpanded
+                if (isExpanded) {
+                    contentTextView.maxLines = Int.MAX_VALUE
+                    text = "收起"
+                } else {
+                    contentTextView.maxLines = 2
+                    text = "… 展开"
+                }
+            }
+        }
+
+        // 将两个 TextView 添加到 ConstraintLayout 中
+        constraintLayout.addView(contentTextView)
+        constraintLayout.addView(moreTextView)
+        // 使用 ConstraintSet 设置约束
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        // 设置 contentTextView 的约束
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.TOP,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.TOP
+        )
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START
+        )
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
+        )
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.BOTTOM
+        )
+
+        // 设置 moreTextView 的约束
+        constraintSet.connect(
+            moreTextView.id,
+            ConstraintSet.BOTTOM,
+            contentTextView.id,
+            ConstraintSet.BOTTOM
+        )
+        constraintSet.connect(
+            moreTextView.id,
+            ConstraintSet.END,
+            contentTextView.id,
+            ConstraintSet.END
+        )
+        constraintSet.applyTo(constraintLayout)
+
+        testText(contentTextView)
+        constraintLayout.post {
+            val layout = contentTextView.layout
+            if (layout != null) {
+                val isTruncated = layout.lineCount > 2 || layout.getEllipsisCount(1) > 0
+                if (isTruncated) {
+                    moreTextView.visibility = View.VISIBLE
+                } else {
+                    moreTextView.visibility = View.GONE
+                }
+            }
+        }
+        return constraintLayout
+    }
+
+    fun createMyView4(context: Context): ConstraintLayout {
+        // 创建 ConstraintLayout 容器
+        val constraintLayout = MyConstraintLayout(context).apply {
+            id = ConstraintLayout.generateViewId()
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+        // 创建 content TextView
+        val contentTextView = TextView(context).apply {
+            id = TextView.generateViewId()
+            text = "asdadaretarettreterta\nsdaadfsdfsdgfdgdfgdaergs"
+            textSize = 15f
+            setBackgroundColor(ContextCompat.getColor(context, android.R.color.white))
+            maxLines = 2
+            ellipsize = android.text.TextUtils.TruncateAt.END
+            setLineSpacing(4f, 1f)
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6)
+            )
+        }
+
+        // 创建 more TextView
+        val moreTextView = TextView(context).apply {
+            id = TextView.generateViewId()
+            text = "… 展开"
+            textSize = 16f
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+            setPadding(
+                resources.getDimensionPixelSize(R.dimen.dp_2),
+                0,
+                resources.getDimensionPixelSize(R.dimen.dp_6),
+                resources.getDimensionPixelSize(R.dimen.dp_6)
+            )
+            var isExpanded = false
+            setOnClickListener {
+                isExpanded = !isExpanded
+                if (isExpanded) {
+                    contentTextView.maxLines = Int.MAX_VALUE
+                    text = "收起"
+                } else {
+                    contentTextView.maxLines = 2
+                    text = "… 展开"
+                }
+            }
+        }
+
+        // 将两个 TextView 添加到 ConstraintLayout 中
+        constraintLayout.addView(contentTextView)
+        constraintLayout.addView(moreTextView)
+        // 使用 ConstraintSet 设置约束
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        // 设置 contentTextView 的约束
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.TOP,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.TOP
+        )
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.START,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.START
+        )
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.END,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.END
+        )
+        constraintSet.connect(
+            contentTextView.id,
+            ConstraintSet.BOTTOM,
+            ConstraintSet.PARENT_ID,
+            ConstraintSet.BOTTOM
+        )
+
+        // 设置 moreTextView 的约束
+        constraintSet.connect(
+            moreTextView.id,
+            ConstraintSet.BOTTOM,
+            contentTextView.id,
+            ConstraintSet.BOTTOM
+        )
+        constraintSet.connect(
+            moreTextView.id,
+            ConstraintSet.END,
+            contentTextView.id,
+            ConstraintSet.END
+        )
+        constraintSet.applyTo(constraintLayout)
+
+        testText(contentTextView)
+        constraintLayout.post {
+            val layout = contentTextView.layout
+            if (layout != null) {
+                val isTruncated = layout.lineCount > 2 || layout.getEllipsisCount(1) > 0
+                if (isTruncated) {
+                    moreTextView.visibility = View.VISIBLE
+                } else {
+                    moreTextView.visibility = View.GONE
+                }
+            }
+        }
+        return constraintLayout
+    }
+
+    fun x1() {
+        val contentTextView = findViewById<TextView>(R.id.content)
+        val moreTextView = findViewById<TextView>(R.id.more)
+
+        contentTextView.post {
+            val layout = contentTextView.layout
+            if (layout != null) {
+                val isTruncated = layout.lineCount > 2 || layout.getEllipsisCount(1) > 0
+                if (isTruncated) {
+                    moreTextView.visibility = View.VISIBLE
+                } else {
+                    moreTextView.visibility = View.GONE
+                }
+            }
+        }
+
+        var isExpanded = false
+
+        moreTextView.setOnClickListener {
+            isExpanded = !isExpanded
+            if (isExpanded) {
+                contentTextView.maxLines = Int.MAX_VALUE
+                moreTextView.text = "收起"
+            } else {
+                contentTextView.maxLines = 2
+                moreTextView.text = "… 展开"
+            }
+        }
+        testText(contentTextView)
     }
 
     fun testText(tv: TextView?) {
@@ -78,7 +358,7 @@ class MainActivity : AppCompatActivity() {
                         "通过 SpannableString 实现“展开”的点击效果。\n" +
                         "完整代码实现"
             )
-//            setText("在卡牌游戏中，光环效果和叠甲（也称为护甲、护盾等）的优先级和相互作用是设计中重要的机制。这些机制的优先级和叠加规则通常根据游戏的具体设计而定，但以下是一些常见的处理方式：1. 光环效果优先级光环效果通常指影响特定区域内单位的持续性效果，这些效果可能会增加或减少属性，赋予特定能力等。其优先级规则通常如下：")
+            setText("在卡牌游戏中，光环效果和叠甲（也称为护甲、护盾等）的优先级和相互作用是设计中重要的机制。这些机制的优先级和叠加规则通常根据游戏的具体设计而定，但以下是一些常见的处理方式：1. 光环效果优先级光环效果通常指影响特定区域内单位的持续性效果，这些效果可能会增加或减少属性，赋予特定能力等。其优先级规则通常如下：")
 //            setText("\n\n\n\n\n")
 //            setText("在全球，随着Flutter被越来越多的知名公司应用在自己的商业APP中，" +
 //                    "Flutter这门新技术也逐渐进入了移动开发者的视野，尤其是当Google在2018年IO大会上发布了第一个" +
@@ -92,6 +372,9 @@ class MainActivity : AppCompatActivity() {
 //                    "#mama2024 #推しFANTASYスペシャル ")
 //            setText("あけましておめでとうございます\uD83C\uDF8D❤\uFE0F\n" +
 //                    "2025年もヨロシク\uD83D\uDE1A✌\uD83C\uDFFB#推しFANTASY#推しFANTASYスペシャル#年越し#初詣#お正月#wasai")
+            setText("asdadaretaretadfgadfgdfgtreterta\nadsDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDS\nSDFDSFSDFDSFAFFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAAFdfgdfsgerta\ndfsgdfgdghshjytrhyrujtyukmtuiy")
+            setText("asdadaretaretadfgadfgdfgtreterta\nadsgffgdfagdfsdaadfsdfsdgfdgdfgdaerFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAgserta\nsadsFSDFDSFSDFDSFAFFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAAFdfgdfsgerta\ndfsgdfgdghshjytrhyrujtyukmtuiy")
+
         }
     }
 
