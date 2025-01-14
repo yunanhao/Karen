@@ -6,7 +6,7 @@ import android.text.StaticLayout
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
-class CustomEllipsizeTextView @JvmOverloads constructor(
+class CustomEllipsizeTextView2 @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

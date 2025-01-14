@@ -5,4 +5,8 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="title_activity_main">ExpandableTextView</string>
+    <string name="title_activity_listview">ExpandableTextView in ListView</string>
+    <string name="to_expand_hint">Expand</string>
+    <string name="to_shrink_hint">Shrink</string>
 </resources>

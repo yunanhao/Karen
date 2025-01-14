@@ -19,8 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/blue_a700">
+            android:background="@color/blue_a700"
+            android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -28,14 +28,13 @@
                 android:background="@color/teal_a400"
                 android:padding="8dp">
 
-                <com.example.karen.view.CustomEllipsizeTextView
+                <com.example.karen.view.ExpandableTextView
                     android:id="@+id/mytext"
                     android:layout_width="match_parent"
-                    android:ellipsize="end"
-                    android:padding="6dp"
-                    android:maxLines="2"
                     android:layout_height="wrap_content"
-                    android:background="#fff" />
+                    android:background="#fff"
+                    android:ellipsize="end"
+                    android:padding="6dp" />
             </FrameLayout>
 
             <FrameLayout
