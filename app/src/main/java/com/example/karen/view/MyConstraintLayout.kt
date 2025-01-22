@@ -2,17 +2,9 @@ package com.example.karen.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Point
 import android.graphics.Rect
-import android.text.Layout
-import android.text.StaticLayout
 import android.util.AttributeSet
-import android.widget.FrameLayout
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
-import com.example.karen.R
 
 class MyConstraintLayout @JvmOverloads constructor(
     context: Context,

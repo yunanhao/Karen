@@ -6,11 +6,8 @@ import android.graphics.Rect
 import android.text.Layout
 import android.text.StaticLayout
 import android.util.AttributeSet
-import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.karen.R
 
 class CustomEllipsizeTextView2 @JvmOverloads constructor(
     context: Context,

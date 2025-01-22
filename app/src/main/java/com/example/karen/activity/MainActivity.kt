@@ -17,13 +17,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.karen.R
 import com.example.karen.adapter.MyAdapter
 import com.example.karen.bean.ImageFileBean
 import com.example.karen.view.ExpandableTextView
 import com.example.karen.view.MyConstraintLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-
+import com.project.app.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

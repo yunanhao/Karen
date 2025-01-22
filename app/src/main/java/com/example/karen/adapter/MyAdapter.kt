@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.karen.R
+import com.project.app.R
 import com.karen.util.common.ToastUtils
 
 class MyAdapter : RecyclerView.Adapter<MyAdapter.ViewHolder>() {

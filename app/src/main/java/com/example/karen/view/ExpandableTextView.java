@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
-import com.example.karen.R;
+import com.project.app.R;
 
 import java.lang.reflect.Field;
 
