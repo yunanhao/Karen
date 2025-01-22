@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
-import androidx.multidex.MultiDex
 
 class BaseApplication : Application() {
     companion object{
@@ -15,7 +14,7 @@ class BaseApplication : Application() {
     
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-        MultiDex.install(this)
+//        MultiDex.install(this)
     }
 
     override fun onCreate() {

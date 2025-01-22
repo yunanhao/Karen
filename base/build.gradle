@@ -15,8 +15,7 @@ android {
         versionName rootProject.ext.android.versionName
         //开启分包
         multiDexEnabled true
-        //配置分包
-        multiDexKeepFile file('multidexK-config.txt')
+
         //配置res文件前缀
         resourcePrefix("base_")
 
@@ -48,9 +47,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dexOptions {
-        javaMaxHeapSize "4g"
-    }
 }
 
 dependencies {
@@ -58,8 +54,7 @@ dependencies {
 
     api libs.androidx.constraintlayout
     api libs.material
-    // 分包依赖 multi dex支持
-    api libs.androidx.multidex
+
     // AndroidX 依赖
     api libs.androidx.appcompat
     api libs.androidx.core.ktx
