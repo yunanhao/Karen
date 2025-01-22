@@ -9,7 +9,7 @@
         android:id="@+id/contentPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/red_a100">
+        android:background="@color/base_red_a100">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/blue_a700"
+            android:background="@color/base_blue_a700"
             android:orientation="vertical">
 
             <FrameLayout
