@@ -372,8 +372,8 @@ class MainActivity : AppCompatActivity() {
 //                    "#mama2024 #推しFANTASYスペシャル ")
 //            setText("あけましておめでとうございます\uD83C\uDF8D❤\uFE0F\n" +
 //                    "2025年もヨロシク\uD83D\uDE1A✌\uD83C\uDFFB#推しFANTASY#推しFANTASYスペシャル#年越し#初詣#お正月#wasai")
-            setText("asdadaretaretadfgadfgdfgtreterta\nadsDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDS\nSDFDSFSDFDSFAFFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAAFdfgdfsgerta\ndfsgdfgdghshjytrhyrujtyukmtuiy")
-            setText("asdadaretaretadfgadfgdfgtreterta\nadsgffgdfagdfsdaadfsdfsdgfdgdfgdaerFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAgserta\nsadsFSDFDSFSDFDSFAFFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAAFdfgdfsgerta\ndfsgdfgdghshjytrhyrujtyukmtuiy")
+//            setText("asdadaretaretadfgadfgdfgtreterta\nadsDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDS\nSDFDSFSDFDSFAFFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAAFdfgdfsgerta\ndfsgdfgdghshjytrhyrujtyukmtuiy")
+//            setText("asdadaretaretadfgadfgdfgtreterta\nadsgffgdfagdfsdaadfsdfsdgfdgdfgdaerFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAgserta\nsadsFSDFDSFSDFDSFAFFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAFSDFDSFSDFDSFAFAAFdfgdfsgerta\ndfsgdfgdghshjytrhyrujtyukmtuiy")
 
         }
     }

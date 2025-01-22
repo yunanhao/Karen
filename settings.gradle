@@ -22,4 +22,3 @@ dependencyResolutionManagement {
 rootProject.name = "Karen"
 include ':app'
 include ':base'
-include ':common'

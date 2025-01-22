@@ -1,6 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.android.library) apply false
+}
+
+ext {
+    android = [
+            applicationId    : "com.example.karen",
+            versionCode      : 1,
+            versionName      : "1.0.0",
+            minSdkVersion    : 28,
+            targetSdkVersion : 34,
+            compileSdkVersion: 34,
+            buildToolsVersion: "30.0.2",
+    ]
+
 }

@@ -29,7 +29,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.base.R;
+import com.project.base.R;
 
 /**
  * <pre>

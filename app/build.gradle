@@ -1,27 +1,26 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id 'org.jetbrains.kotlin.kapt'
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
+    namespace 'com.project.app'
+    compileSdk rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdk rootProject.ext.android.minSdkVersion
+        targetSdk rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
     signingConfigs {
         release {
         }
     }
-    namespace 'com.example.karen'
-    compileSdk 34
-
-    defaultConfig {
-        applicationId "com.example.karen"
-        minSdk 29
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -48,7 +47,6 @@ dependencies {
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.androidx.navigation.ui.ktx
-    implementation project(':common')
     implementation project(':base')
     implementation libs.androidx.activity
     testImplementation libs.junit
