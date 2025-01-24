@@ -13,7 +13,6 @@ import com.project.karen.fragment.MainFragment
 import com.project.karen.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.time.delay
-import kotlinx.coroutines.yield
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
@@ -54,7 +53,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
 
-        supportFragmentManager.beginTransaction().add(R.id.fragment_container_panel, MainFragment())
+        supportFragmentManager.beginTransaction()
+            .add(mBinding.fragmentContainerPanel.id, MainFragment())
             .commit()
 
     }
