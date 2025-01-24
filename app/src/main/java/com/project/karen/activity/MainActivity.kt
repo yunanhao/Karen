@@ -3,7 +3,6 @@ package com.project.karen.activity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
-import com.project.app.R
 import com.project.app.databinding.ActivityMainBinding
 import com.project.base.databinding.BaseDialogCommonBinding
 import com.project.base.ui.BaseActivity
