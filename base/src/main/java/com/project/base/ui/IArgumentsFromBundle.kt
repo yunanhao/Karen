@@ -13,136 +13,136 @@ interface IArgumentsFromBundle {
     /**
      * 传递 bundle，在这里可以获取
      */
-    fun getBundle(): Bundle?
+    fun getArguments(): Bundle?
 
     fun getByteFromBundle(key: String?, defValue: Byte = 0): Byte {
-        return getBundle()?.getByte(key, defValue) ?: 0
+        return getArguments()?.getByte(key, defValue) ?: 0
     }
 
     fun getCharFromBundle(key: String?, defValue: Char = ' '): Char {
-        return getBundle()?.getChar(key, defValue) ?: ' '
+        return getArguments()?.getChar(key, defValue) ?: ' '
     }
 
     fun getShortFromBundle(key: String?, defValue: Short = 0): Short {
-        return getBundle()?.getShort(key, defValue) ?: 0
+        return getArguments()?.getShort(key, defValue) ?: 0
     }
 
     fun getFloatFromBundle(key: String?, defValue: Float = 0f): Float {
-        return getBundle()?.getFloat(key, defValue) ?: 0f
+        return getArguments()?.getFloat(key, defValue) ?: 0f
     }
 
     fun getCharSequenceFromBundle(
         key: String?,
         defValue: CharSequence? = null
     ): CharSequence? {
-        return getBundle()?.getCharSequence(key, defValue)
+        return getArguments()?.getCharSequence(key, defValue)
     }
 
     fun getSizeFromBundle(key: String?): Size? {
-        return getBundle()?.getSize(key)
+        return getArguments()?.getSize(key)
     }
 
     fun getSizeFFromBundle(key: String?): SizeF? {
-        return getBundle()?.getSizeF(key)
+        return getArguments()?.getSizeF(key)
     }
 
     fun getBundleFromBundle(key: String?): Bundle? {
-        return getBundle()?.getBundle(key)
+        return getArguments()?.getBundle(key)
     }
 
     fun <T : Parcelable> getParcelableFromBundle(key: String?): T? {
-        return getBundle()?.getParcelable(key)
+        return getArguments()?.getParcelable(key)
     }
 
     fun getParcelableArrayFromBundle(key: String?): Array<Parcelable?>? {
-        return getBundle()?.getParcelableArray(key)
+        return getArguments()?.getParcelableArray(key)
     }
 
     fun <T : Parcelable> getParcelableArrayListFromBundle(key: String?): ArrayList<T>? {
-        return getBundle()?.getParcelableArrayList(key)
+        return getArguments()?.getParcelableArrayList(key)
     }
 
     fun <T : Parcelable?> getSparseParcelableArrayFromBundle(key: String?): SparseArray<T>? {
-        return getBundle()?.getSparseParcelableArray(key)
+        return getArguments()?.getSparseParcelableArray(key)
     }
 
     fun getSerializableFromBundle(key: String?): Serializable? {
-        return getBundle()?.getSerializable(key)
+        return getArguments()?.getSerializable(key)
     }
 
     fun getIntegerArrayListFromBundle(key: String?): ArrayList<Int?>? {
-        return getBundle()?.getIntegerArrayList(key)
+        return getArguments()?.getIntegerArrayList(key)
     }
 
     fun getStringArrayListFromBundle(key: String?): ArrayList<String?>? {
-        return getBundle()?.getStringArrayList(key)
+        return getArguments()?.getStringArrayList(key)
     }
 
     fun getCharSequenceArrayListFromBundle(key: String?): ArrayList<CharSequence?>? {
-        return getBundle()?.getCharSequenceArrayList(key)
+        return getArguments()?.getCharSequenceArrayList(key)
     }
 
     fun getByteArrayFromBundle(key: String?): ByteArray? {
-        return getBundle()?.getByteArray(key)
+        return getArguments()?.getByteArray(key)
     }
 
     fun getShortArrayFromBundle(key: String?): ShortArray? {
-        return getBundle()?.getShortArray(key)
+        return getArguments()?.getShortArray(key)
     }
 
     fun getCharArrayFromBundle(key: String?): CharArray? {
-        return getBundle()?.getCharArray(key)
+        return getArguments()?.getCharArray(key)
     }
 
     fun getFloatArrayFromBundle(key: String?): FloatArray? {
-        return getBundle()?.getFloatArray(key)
+        return getArguments()?.getFloatArray(key)
     }
 
     fun getCharSequenceArrayFromBundle(key: String?): Array<CharSequence?>? {
-        return getBundle()?.getCharSequenceArray(key)
+        return getArguments()?.getCharSequenceArray(key)
     }
 
     fun getBinderFromBundle(key: String?): IBinder? {
-        return getBundle()?.getBinder(key)
+        return getArguments()?.getBinder(key)
     }
 
     fun getBooleanFromBundle(key: String?, defValue: Boolean = false): Boolean? {
-        return getBundle()?.getBoolean(key, defValue)
+        return getArguments()?.getBoolean(key, defValue)
     }
 
     fun getIntFromBundle(key: String?, defValue: Int = 0): Int {
-        return getBundle()?.getInt(key, defValue) ?: 0
+        return getArguments()?.getInt(key, defValue) ?: 0
     }
 
     fun getLongFromBundle(key: String?, defValue: Long = 0): Long {
-        return getBundle()?.getLong(key, defValue) ?: 0
+        return getArguments()?.getLong(key, defValue) ?: 0
     }
 
     fun getDoubleFromBundle(key: String?, defValue: Double = 0.0): Double {
-        return getBundle()?.getDouble(key, defValue) ?: 0.0
+        return getArguments()?.getDouble(key, defValue) ?: 0.0
     }
 
     fun getStringFromBundle(key: String?, defValue: String? = null): String? {
-        return getBundle()?.getString(key, defValue)
+        return getArguments()?.getString(key, defValue)
     }
 
     fun getBooleanArrayFromBundle(key: String?): BooleanArray? {
-        return getBundle()?.getBooleanArray(key)
+        return getArguments()?.getBooleanArray(key)
     }
 
     fun getIntArrayFromBundle(key: String?): IntArray? {
-        return getBundle()?.getIntArray(key)
+        return getArguments()?.getIntArray(key)
     }
 
     fun getLongArrayFromBundle(key: String?): LongArray? {
-        return getBundle()?.getLongArray(key)
+        return getArguments()?.getLongArray(key)
     }
 
     fun getDoubleArrayFromBundle(key: String?): DoubleArray? {
-        return getBundle()?.getDoubleArray(key)
+        return getArguments()?.getDoubleArray(key)
     }
 
     fun getStringArrayFromBundle(key: String?): Array<String?>? {
-        return getBundle()?.getStringArray(key)
+        return getArguments()?.getStringArray(key)
     }
 }

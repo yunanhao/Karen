@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -16,19 +15,20 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.karen.adapter.MyAdapter
 import com.example.karen.bean.ImageFileBean
 import com.example.karen.view.ExpandableTextView
 import com.example.karen.view.MyConstraintLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.project.BaseApplication
 import com.project.app.R
 import com.project.app.databinding.ActivityMainBinding
 import com.project.base.ui.BaseActivity
+import com.project.base.ui.BaseDialogFragment
+import com.project.base.ui.BaseEmptyViewModel
+import com.project.base.util.common.ToastUtils
 
-class MainActivity : BaseActivity<ActivityMainBinding, Nothing>() {
+class MainActivity : BaseActivity<ActivityMainBinding, BaseEmptyViewModel>() {
 
     override val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -68,8 +68,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, Nothing>() {
 
         findViewById<FloatingActionButton>(R.id.fab)
             .setOnClickListener {
+                ToastUtils.showLong(viewModel?.toString())
+                BaseDialogFragment(com.project.base.R.layout.base_dialog_common) {
 
-
+                }.show(supportFragmentManager)
             }
         x1()
         findViewById<ViewGroup>(R.id.myView3).addView(createMyView3(this))

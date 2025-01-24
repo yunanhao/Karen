@@ -17,7 +17,7 @@ android {
         multiDexEnabled false
 
         //配置res文件前缀
-        resourcePrefix("base_")
+//        resourcePrefix("base_")
 
         javaCompileOptions {
             annotationProcessorOptions {

@@ -1,174 +1,47 @@
-package com.project.base.ui;
+package com.project.base.ui
 
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.annotation.IdRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import com.project.base.util.common.AppUtils;
-import com.project.base.util.common.ClickUtils;
+import android.content.Context
+import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
-/**
- * <pre>
- *     author: Blankj
- *     blog  : http://blankj.com
- *     time  : 2017/03/28
- *     desc  : base about v4-fragment
- * </pre>
- */
-public abstract class BaseFragment extends Fragment
-        implements IBaseView {
+abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : AppCompatDialogFragment(), IArgumentsFromBundle {
 
-    private static Boolean isDebug;
+    abstract val binding: VB
 
-    private static final String STATE_SAVE_IS_HIDDEN = "STATE_SAVE_IS_HIDDEN";
+    var mViewModel: VM? = null
 
-    private View.OnClickListener mClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onDebouncingClick(v);
-        }
-    };
+    open fun createViewModel(): VM? {
+        // 获取父类的泛型类型
+        val type: Type? = javaClass.genericSuperclass
+        var modelClass: Class<VM>? = null
 
-    protected AppCompatActivity mActivity;
-    protected LayoutInflater    mInflater;
-    protected View              mContentView;
-
-    protected boolean mIsVisibleToUser;
-    protected boolean mIsBusinessDone;
-    protected boolean mIsInPager;
-
-    /**
-     * @return true true {@link #doBusiness()} will lazy in view pager, false otherwise
-     */
-    public boolean isLazy() {
-        return false;
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        log("setUserVisibleHint: " + isVisibleToUser);
-        super.setUserVisibleHint(isVisibleToUser);
-        mIsInPager = true;
-        if (isVisibleToUser) mIsVisibleToUser = true;
-        if (isLazy()) {
-            if (!mIsBusinessDone && isVisibleToUser && mContentView != null) {
-                mIsBusinessDone = true;
-                doBusiness();
+        if (type is ParameterizedType) {
+            // 获取泛型的第二个类型参数
+            val viewModelType = type.actualTypeArguments[1]
+            if (viewModelType is Class<*>) {
+                modelClass = viewModelType as Class<VM>?
+            }else if (viewModelType is ParameterizedType) {
+                modelClass = viewModelType.rawType as Class<VM>?
             }
         }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        log("onAttach");
-        super.onAttach(context);
-        mActivity = (AppCompatActivity) context;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        log("onCreate");
-        super.onCreate(savedInstanceState);
-        FragmentManager fm = getFragmentManager();
-        if (fm == null) return;
-        if (savedInstanceState != null) {
-            boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
-            FragmentTransaction ft = fm.beginTransaction();
-            if (isSupportHidden) {
-                ft.hide(this);
-            } else {
-                ft.show(this);
-            }
-            ft.commitAllowingStateLoss();
-        }
-        Bundle bundle = getArguments();
-        initData(bundle);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        log("onCreateView");
-        super.onCreateView(inflater, container, savedInstanceState);
-        mInflater = inflater;
-        setContentView();
-        return mContentView;
-    }
-
-    @Override
-    public void setContentView() {
-        if (bindLayout() <= 0) return;
-        mContentView = mInflater.inflate(bindLayout(), null);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        log("onViewCreated");
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        log("onActivityCreated");
-        super.onActivityCreated(savedInstanceState);
-        initView(savedInstanceState, mContentView);
-        if (!mIsInPager || !isLazy() || mIsVisibleToUser) {
-            mIsBusinessDone = true;
-            doBusiness();
+        return if (modelClass != null) {
+            // 使用 ViewModelProvider 获取 ViewModel
+            ViewModelProvider(this)[modelClass]
+        } else {
+            // 如果无法推断出 ViewModel 类型，抛出异常或返回 null
+            null
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        log("onHiddenChanged: " + hidden);
-        super.onHiddenChanged(hidden);
-    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        arguments
 
-    @Override
-    public void onDestroyView() {
-        log("onDestroyView");
-        super.onDestroyView();
-        mIsVisibleToUser = false;
-        mIsBusinessDone = false;
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        log("onSaveInstanceState");
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden());
-    }
-
-    @Override
-    public void onDestroy() {
-        log("onDestroy");
-        super.onDestroy();
-    }
-
-    public void applyDebouncingClickListener(View... views) {
-        ClickUtils.applyGlobalDebouncing(views, mClickListener);
-    }
-
-    public <T extends View> T findViewById(@IdRes int id) {
-        if (mContentView == null) throw new NullPointerException("ContentView is null.");
-        return mContentView.findViewById(id);
-    }
-
-    protected void log(String msg) {
-        if (isDebug == null) {
-            isDebug = AppUtils.isAppDebug();
-        }
-        if (isDebug) {
-            Log.d("BaseFragment", getClass().getSimpleName() + ": " + msg);
-        }
     }
 }

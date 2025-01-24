@@ -11,7 +11,7 @@
             android:id="@+id/contentPanel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/base_red_a100">
+            android:background="@color/red_a100">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -21,13 +21,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/base_blue_a700"
+                android:background="@color/blue_a700"
                 android:orientation="vertical">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/base_blueDarker_200"
+                    android:background="@color/blueDarker_200"
                     android:padding="8dp">
 
                     <com.example.karen.view.ExpandableTextView
@@ -42,7 +42,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/base_blueDarker_200"
+                    android:background="@color/blueDarker_200"
                     android:padding="8dp">
 
                     <com.example.karen.view.CustomEllipsizeTextView2
@@ -81,14 +81,14 @@
                     android:id="@+id/myView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/base_blueDarker_200"
+                    android:background="@color/blueDarker_200"
                     android:padding="8dp" />
 
                 <FrameLayout
                     android:id="@+id/myView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/base_blueDarker_200"
+                    android:background="@color/blueDarker_200"
                     android:padding="8dp" />
             </LinearLayout>
         </FrameLayout>
