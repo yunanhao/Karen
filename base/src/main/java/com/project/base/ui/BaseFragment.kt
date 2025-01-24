@@ -2,7 +2,6 @@ package com.project.base.ui
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
@@ -13,7 +12,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : AppCompatDialogF
 
     abstract val binding: VB
 
-    var mViewModel: VM? = null
+    var viewModel: VM? = null
 
     open fun createViewModel(): VM? {
         // 获取父类的泛型类型
@@ -41,7 +40,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : AppCompatDialogF
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        arguments
-
+        viewModel = createViewModel()
     }
 }
