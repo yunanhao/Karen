@@ -10,34 +10,35 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.project.base.databinding.BaseEmptyLayoutBinding
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel<*>> :
     AppCompatActivity(), View.OnClickListener, IArgumentsFromIntent {
 
-    abstract val binding: VB
+    abstract val mBinding: VB
 
-    var viewModel: VM? = null
+    var mViewModel: VM? = null
 
     val startActivityForResult by lazy {
         // ActivityResultContracts.StartActivityForResult()	启动一个 Activity，并返回结果
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            viewModel?.startActivityResult?.value = it
+            mViewModel?.startActivityResult?.value = it
         }
     }
 
     val getContent by lazy {
         // ActivityResultContracts.GetContent()	打开文件选择器并返回所选文件的 Uri
         registerForActivityResult(ActivityResultContracts.GetContent()) {
-            viewModel?.getContentUri?.value = it
+            mViewModel?.getContentUri?.value = it
         }
     }
 
     val requestMultiplePermissions by lazy {
         // ActivityResultContracts.RequestMultiplePermissions() 请求多个权限
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            viewModel?.queryMultiplePermissions?.value = it
+            mViewModel?.queryMultiplePermissions?.value = it
         }
     }
 
@@ -100,10 +101,13 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel<*>> :
         super.onCreate(savedInstanceState)
 
         // 让 LiveData 和 xml 可以双向绑定
-        (binding as? ViewDataBinding)?.lifecycleOwner = this
-        setContentView(binding.root)
-        viewModel = createViewModel()
-        intent
+        (mBinding as? ViewDataBinding)?.lifecycleOwner = this
+        BaseEmptyLayoutBinding.inflate(layoutInflater).apply {
+            contentPanel.addView(mBinding.root)
+            setContentView(root)
+        }
+
+        mViewModel = createViewModel()
     }
 
     @CallSuper
@@ -140,7 +144,7 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel<*>> :
     override fun onDestroy() {
         Log.v("${componentName.className} ${hashCode()}", "onDestroy")
         super.onDestroy()
-        (binding as? ViewDataBinding)?.unbind()
+        (mBinding as? ViewDataBinding)?.unbind()
     }
 
     override fun onClick(v: View) {

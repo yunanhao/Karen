@@ -20,9 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/Theme.Karen">
         <activity
-            android:name="com.example.karen.activity.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Karen">
+            android:name="com.project.karen.activity.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

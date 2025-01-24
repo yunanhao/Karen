@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
@@ -122,7 +120,7 @@ open class BaseDialogFragment(
         return theme
     }
 
-    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, initTheme())
 
@@ -141,10 +139,11 @@ open class BaseDialogFragment(
     }
 
     override fun onCreateView(
-        @NonNull inflater: LayoutInflater,
-        @Nullable container: ViewGroup?,
-        @Nullable savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
+
         val view = inflater.inflate(layoutId, container, false)
         convertView?.invoke(ViewHolder(view, this))
         return view
@@ -210,8 +209,8 @@ open class BaseDialogFragment(
 
         //设置dialog进入、退出的动画
         window.setWindowAnimations(animStyle)
-        window.setAttributes(lp)
-        setCancelable(outCancelable)
+        window.attributes = lp
+        isCancelable = outCancelable
     }
 
     fun setMarginHorizontal(marginHorizontal: Int): BaseDialogFragment {
