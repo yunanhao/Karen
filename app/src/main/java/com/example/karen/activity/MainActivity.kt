@@ -8,23 +8,32 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.example.karen.adapter.MyAdapter
 import com.example.karen.bean.ImageFileBean
 import com.example.karen.view.ExpandableTextView
 import com.example.karen.view.MyConstraintLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.project.BaseApplication
 import com.project.app.R
+import com.project.app.databinding.ActivityMainBinding
+import com.project.base.ui.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding, Nothing>() {
+
+    override val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
 
         val v1 = findViewById<TextView>(R.id.mytext)
         testText(v1)

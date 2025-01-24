@@ -10,7 +10,7 @@
 
     <application>
         <activity
-            android:name="com.karen.base.dialog.DialogActivity"
+            android:name="com.project.base.ui.dialog.DialogActivity"
             android:theme="@style/base_AlertDialogActivity" />
     </application>
 </manifest>

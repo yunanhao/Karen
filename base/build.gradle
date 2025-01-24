@@ -13,8 +13,8 @@ android {
         targetSdk rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        //开启分包
-        multiDexEnabled true
+        //分包开关
+        multiDexEnabled false
 
         //配置res文件前缀
         resourcePrefix("base_")
@@ -47,6 +47,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        dataBinding true
+    }
+    viewBinding {
+        enabled = true
+    }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -75,6 +84,8 @@ dependencies {
     api libs.retrofit
     api libs.retrofit.gson
     api libs.retrofit.rxjava3
+    api libs.glide
+    kapt libs.glide.compiler
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

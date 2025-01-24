@@ -7,12 +7,12 @@ plugins {
 
 ext {
     android = [
-            applicationId    : "com.example.karen",
+            applicationId    : "com.project.karen",
             versionCode      : 1,
             versionName      : "1.0.0",
             minSdkVersion    : 28,
-            targetSdkVersion : 34,
-            compileSdkVersion: 34,
+            targetSdkVersion : 35,
+            compileSdkVersion: 35,
             buildToolsVersion: "30.0.2",
     ]
 
