@@ -1,6 +1,7 @@
 package com.project.base.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.SparseArray
@@ -10,13 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
 import androidx.annotation.StyleRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.FragmentManager
 import com.project.base.R
 
 open class BaseDialogFragment(
-    private val layoutId: Int,
+    private val layoutId: Int? = null,
+    private val layoutView: View? = null,
     private val convertView: ((holder: ViewHolder) -> Unit)?
 ) : AppCompatDialogFragment() {
     class ViewHolder(val root: View, private val dialogFragment: BaseDialogFragment) {
@@ -73,9 +77,7 @@ open class BaseDialogFragment(
         const val DIM = "dim_amount"
         const val GRAVITY = "gravity"
         const val CANCEL = "out_cancel"
-        const val THEME = "theme"
         const val ANIM = "anim_style"
-        const val LAYOUT = "layout_id"
 
         fun Float.dp2px(context: Context?): Int {
             context ?: return this.toInt()
@@ -111,18 +113,11 @@ open class BaseDialogFragment(
     private var outCancelable = true//是否点击外部取消
 
     @StyleRes
-    private var theme = R.style.base_NiceDialogStyle // dialog主题
-
-    @StyleRes
     private var animStyle: Int = 0
 
-    private fun initTheme(): Int {
-        return theme
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, initTheme())
+        setStyle(STYLE_NORMAL, android.R.style.Theme_Wallpaper_NoTitleBar_Fullscreen)
 
         //恢复保存的数据
         if (savedInstanceState != null) {
@@ -133,18 +128,21 @@ open class BaseDialogFragment(
             dimAmount = savedInstanceState.getFloat(DIM)
             gravity = savedInstanceState.getInt(GRAVITY)
             outCancelable = savedInstanceState.getBoolean(CANCEL)
-            theme = savedInstanceState.getInt(THEME)
             animStyle = savedInstanceState.getInt(ANIM)
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        @NonNull inflater: LayoutInflater,
+        @Nullable container: ViewGroup?,
+        @Nullable savedInstanceState: Bundle?
     ): View {
-
-        val view = inflater.inflate(layoutId, container, false)
+        val view: View? = if (layoutId != null) {
+            inflater.inflate(layoutId, container, false)
+        } else {
+            layoutView
+        }
+        if (view == null) throw NullPointerException("layoutId and layoutView is null")
         convertView?.invoke(ViewHolder(view, this))
         return view
     }
@@ -168,9 +166,7 @@ open class BaseDialogFragment(
         outState.putFloat(DIM, dimAmount)
         outState.putInt(GRAVITY, gravity)
         outState.putBoolean(CANCEL, outCancelable)
-        outState.putInt(THEME, theme)
         outState.putInt(ANIM, animStyle)
-        outState.putInt(LAYOUT, layoutId)
     }
 
     private fun initParams() {
@@ -206,7 +202,9 @@ open class BaseDialogFragment(
             -2 -> lp.height = WindowManager.LayoutParams.WRAP_CONTENT
             else -> lp.height = height.dp2px(context)
         }
-
+        // 设置透明状态栏
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.statusBarColor = Color.TRANSPARENT
         //设置dialog进入、退出的动画
         window.setWindowAnimations(animStyle)
         window.attributes = lp

@@ -86,8 +86,8 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel<*>> :
         }
     }
 
-    fun <T> observe(liveData: LiveData<T>, onChanged: ((t: T) -> Unit)) =
-        liveData.observe(this) {
+    fun <T> observe(liveData: LiveData<T>?, onChanged: ((t: T) -> Unit)) =
+        liveData?.observe(this) {
             try {
                 onChanged(it)
             } catch (e: Exception) {
@@ -108,6 +108,14 @@ abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel<*>> :
         }
 
         mViewModel = createViewModel()
+        startActivityForResult
+        getContent
+        requestMultiplePermissions
+        requestPermission
+        openDocument
+        takePicture
+        takePicturePreview
+
     }
 
     @CallSuper

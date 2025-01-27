@@ -1,31 +1,4 @@
-<resources>
-
-    <!-- Base application theme. -->
-    <style name="base_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/red_100</item>
-        <item name="colorPrimaryDark">@color/red_400</item>
-        <item name="colorAccent">@color/red_500</item>
-    </style>
-
-    <style name="base_AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="base_AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="base_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="base_FullscreenTheme" parent="base_AppTheme">
-        <item name="android:actionBarStyle">@style/base_FullscreenActionBarStyle</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@null</item>
-    </style>
-
-    <style name="base_FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/blue_50</item>
-    </style>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--弹窗主题-->
     <style name="base_AlertDialogActivity">
         <!--设置dialog的背景-->
@@ -45,32 +18,13 @@
         <!--背景是否模糊显示-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    <style name="base_NiceDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowSoftInputMode">adjustPan</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-    <style name="base_BottomAnimation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/bottom_enter_anim</item>
-        <item name="android:windowExitAnimation">@anim/bottom_exit_anim</item>
-    </style>
 
-    <style name="base_RightAnimation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/right_enter_anim</item>
-        <item name="android:windowExitAnimation">@anim/right_exit_anim</item>
-    </style>
-
-    <style name="base_LeftAnimation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/left_enter_anim</item>
-        <item name="android:windowExitAnimation">@anim/left_exit_anim</item>
-    </style>
-
-    <style name="base_TopAnimation" parent="android:Animation">
-        <item name="android:windowEnterAnimation">@anim/top_enter_anim</item>
-        <item name="android:windowExitAnimation">@anim/top_exit_anim</item>
-    </style>
+    <declare-styleable name="rich_text" tools:ignore="ResourceName">
+        <attr name="layout_isUnderline" format="boolean" />
+        <attr name="layout_isStrikethrough" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="AspectRatioView">
+        <attr name="aspectRatio" format="float" />
+    </declare-styleable>
 
 </resources>
