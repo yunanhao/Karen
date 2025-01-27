@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.project.app.databinding.ActivityMainBinding
+import com.project.base.R
 import com.project.base.databinding.BaseDialogCommonBinding
 import com.project.base.ui.BaseActivity
 import com.project.base.ui.BaseDialogFragment
@@ -52,11 +53,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
+            view.setBackgroundColor(0xffff0000.toInt())
+            view.scaleType = ImageView.ScaleType.FIT_XY
 
-            view.scaleType = ImageView.ScaleType.CENTER
             BaseDialogFragment(layoutView = view) { vh ->
                 (vh.root as? ImageView)?.setImageURI(it)
-            }.setDimAmount(1f).setHeight(-1).show(supportFragmentManager)
+            }
+//                .setTheme(R.style.base_NiceDialogStyle)
+                .setDimAmount(1f).setHeight(-1).show(supportFragmentManager)
         }
     }
 

@@ -7,50 +7,55 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/contentPanel"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/red_a100">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/contentPanel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/grey_500"
-                android:orientation="vertical">
+                android:background="@color/red_a100">
 
-                <FrameLayout
-                    android:id="@+id/myView3"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_300"
-                    android:background="@color/blueDarker_200"
-                    android:padding="8dp" />
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_500"
+                    android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@+id/myView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_100"
-                    android:layout_marginTop="@dimen/dp_60"
-                    android:background="@color/blueDarker_800"
-                    android:padding="8dp" />
+                    <FrameLayout
+                        android:id="@+id/myView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_300"
+                        android:background="@color/blueDarker_200"
+                        android:padding="8dp" />
 
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragment_container_panel"
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragment_container_panel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/lime_900"
+                        android:minHeight="@dimen/dimen_common_120"
+                        android:visibility="visible"
+                        tools:visibility="visible" />
+
+                    <FrameLayout
+                        android:id="@+id/myView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_100"
+                        android:layout_marginTop="@dimen/dp_60"
+                        android:background="@color/blueDarker_800"
+                        android:padding="8dp" />
+                </LinearLayout>
+
+                <com.project.base.ui.widget.ZoomImageView
+                    android:id="@+id/iv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/lime_900"
-                    android:minHeight="@dimen/dimen_common_120"
-                    android:visibility="visible"
-                    tools:visibility="visible" />
-            </LinearLayout>
-
-            <com.project.base.ui.widget.ZoomImageView
-                android:id="@+id/iv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:scaleType="center" />
-        </FrameLayout>
+                    android:layout_gravity="bottom"
+                    android:scaleType="center" />
+            </FrameLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floating_action_button"

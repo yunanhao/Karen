@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="base_NiceDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-        <!--设置无标题-->
-        <item name="android:windowNoTitle">true</item>
+    <style name="base_NiceDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
+        <!-- 确保全屏 -->
         <!--是否浮现在activity之上-->
         <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <!--设置无标题-->
+        <item name="android:windowNoTitle">true</item>
         <!--设置窗口内容不覆盖-->
         <item name="android:windowContentOverlay">@null</item>
     </style>

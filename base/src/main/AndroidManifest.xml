@@ -4,13 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission
-        android:name="android.permission.REBOOT"
-        tools:ignore="ProtectedPermissions" />
-
     <application>
-        <activity
-            android:name="com.project.base.ui.dialog.DialogActivity"
-            android:theme="@style/base_AlertDialogActivity" />
+
     </application>
 </manifest>

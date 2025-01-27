@@ -78,6 +78,7 @@ open class BaseDialogFragment(
         const val GRAVITY = "gravity"
         const val CANCEL = "out_cancel"
         const val ANIM = "anim_style"
+        const val THEME = "theme"
 
         fun Float.dp2px(context: Context?): Int {
             context ?: return this.toInt()
@@ -115,9 +116,12 @@ open class BaseDialogFragment(
     @StyleRes
     private var animStyle: Int = 0
 
+    @StyleRes
+    private var theme: Int = android.R.style.Theme_Wallpaper_NoTitleBar_Fullscreen // dialog主题
+
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
+        setStyle(STYLE_NORMAL, theme)
 
         //恢复保存的数据
         if (savedInstanceState != null) {
@@ -129,6 +133,7 @@ open class BaseDialogFragment(
             gravity = savedInstanceState.getInt(GRAVITY)
             outCancelable = savedInstanceState.getBoolean(CANCEL)
             animStyle = savedInstanceState.getInt(ANIM)
+            theme = savedInstanceState.getInt(THEME)
         }
     }
 
@@ -167,6 +172,7 @@ open class BaseDialogFragment(
         outState.putInt(GRAVITY, gravity)
         outState.putBoolean(CANCEL, outCancelable)
         outState.putInt(ANIM, animStyle)
+        outState.putInt(THEME, theme)
     }
 
     private fun initParams() {
@@ -208,6 +214,18 @@ open class BaseDialogFragment(
         //设置dialog进入、退出的动画
         window.setWindowAnimations(animStyle)
         window.attributes = lp
+        // 设置全屏
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
+//        window.decorView.systemUiVisibility = (
+//                View.SYSTEM_UI_FLAG_FULLSCREEN    // 隐藏状态栏
+//                        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                )
+
         isCancelable = outCancelable
     }
 
@@ -248,6 +266,11 @@ open class BaseDialogFragment(
 
     fun setAnimStyle(@StyleRes animStyle: Int): BaseDialogFragment {
         this.animStyle = animStyle
+        return this
+    }
+
+    fun setTheme(@StyleRes theme: Int): BaseDialogFragment {
+        this.theme = theme
         return this
     }
 
