@@ -1,5 +1,7 @@
 package com.project.base.util.common;
 
+import static androidx.core.app.NotificationManagerCompat.*;
+
 import java.lang.reflect.Field;
 
 import android.annotation.SuppressLint;
@@ -13,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.annotation.CallSuper;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -21,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationManagerCompat;
+
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -230,7 +234,7 @@ public final class ToastUtils {
     }
 
     private static void show(final int resId, final int duration) {
-        show(resId, duration, (Object)null);
+        show(resId, duration, (Object) null);
     }
 
     private static void show(final int resId, final int duration, final Object... args) {
@@ -284,19 +288,15 @@ public final class ToastUtils {
     }
 
     private static IToast newToast() {
-        if (NotificationManagerCompat.from(Utils.getApp()).areNotificationsEnabled()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (!UtilsBridge.isGrantedDrawOverlays()) {
-                    return new SystemToast(new Toast(Utils.getApp()));
-                }
-            }
+        if (!UtilsBridge.isGrantedDrawOverlays()) {
+            return new SystemToast(new Toast(Utils.getApp()));
         }
         return new ToastWithoutNotification(new Toast(Utils.getApp()));
     }
 
     private static View getView(@LayoutRes final int layoutId) {
         LayoutInflater inflate =
-            (LayoutInflater)Utils.getApp().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                (LayoutInflater) Utils.getApp().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return inflate.inflate(layoutId, null);
     }
 
@@ -312,7 +312,7 @@ public final class ToastUtils {
                     Object mTN = mTNField.get(toast);
                     Field mTNmHandlerField = mTNField.getType().getDeclaredField("mHandler");
                     mTNmHandlerField.setAccessible(true);
-                    Handler tnHandler = (Handler)mTNmHandlerField.get(mTN);
+                    Handler tnHandler = (Handler) mTNmHandlerField.get(mTN);
                     mTNmHandlerField.set(mTN, new SafeHandler(tnHandler));
                 } catch (Exception ignored) {/**/}
             }
@@ -365,13 +365,15 @@ public final class ToastUtils {
         @SuppressLint("WrongConstant")
         @Override
         public void show() {
-            if (mToast == null) { return; }
+            if (mToast == null) {
+                return;
+            }
             boolean isActivityContext = false;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
-                mWM = (WindowManager)Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
+                mWM = (WindowManager) Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
                 mParams.type = WindowManager.LayoutParams.TYPE_TOAST;
             } else if (UtilsBridge.isGrantedDrawOverlays()) {
-                mWM = (WindowManager)Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
+                mWM = (WindowManager) Utils.getApp().getSystemService(Context.WINDOW_SERVICE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     mParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
                 } else {
@@ -385,7 +387,7 @@ public final class ToastUtils {
                     new SystemToast(mToast).show();
                     return;
                 }
-                Activity topActivity = (Activity)topActivityOrApp;
+                Activity topActivity = (Activity) topActivityOrApp;
                 if (topActivity.isFinishing() || topActivity.isDestroyed()) {
                     Log.w("ToastUtils", topActivity + " is useless");
                     // try to use system toast
@@ -396,7 +398,7 @@ public final class ToastUtils {
                 mWM = topActivity.getWindowManager();
                 mParams.type = WindowManager.LayoutParams.LAST_APPLICATION_WINDOW;
                 UtilsBridge.addActivityLifecycleCallbacks(topActivity,
-                    getActivityLifecycleCallbacks());
+                        getActivityLifecycleCallbacks());
             }
 
             setToastParams();
@@ -416,8 +418,8 @@ public final class ToastUtils {
             mParams.windowAnimations = android.R.style.Animation_Toast;
             mParams.setTitle("ToastWithoutNotification");
             mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                    | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                    | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
             mParams.packageName = Utils.getApp().getPackageName();
 
             mParams.gravity = mToast.getGravity();
@@ -448,7 +450,9 @@ public final class ToastUtils {
             return new Utils.ActivityLifecycleCallbacks() {
                 @Override
                 public void onActivityDestroyed(@NonNull Activity activity) {
-                    if (iToast == null) { return; }
+                    if (iToast == null) {
+                        return;
+                    }
                     activity.getWindow().getDecorView().setVisibility(View.GONE);
                     iToast.cancel();
                 }
@@ -510,14 +514,14 @@ public final class ToastUtils {
                 Drawable msgBg = tvMsg.getBackground();
                 if (tvBg != null && msgBg != null) {
                     tvBg.setColorFilter(
-                        new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN));
+                            new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN));
                     tvMsg.setBackgroundColor(Color.TRANSPARENT);
                 } else if (tvBg != null) {
                     tvBg.setColorFilter(
-                        new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN));
+                            new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN));
                 } else if (msgBg != null) {
                     msgBg.setColorFilter(
-                        new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN));
+                            new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN));
                 } else {
                     mToastView.setBackgroundColor(sBgColor);
                 }
