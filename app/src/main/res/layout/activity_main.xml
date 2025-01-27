@@ -37,8 +37,9 @@
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragment_container_panel"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_common_120"
+                    android:layout_height="wrap_content"
                     android:background="@color/lime_900"
+                    android:minHeight="@dimen/dimen_common_120"
                     android:visibility="visible"
                     tools:visibility="visible" />
             </LinearLayout>

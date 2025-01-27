@@ -15,6 +15,9 @@ import com.project.karen.fragment.MainFragment
 import com.project.karen.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.time.delay
+import java.text.DateFormat
+import java.util.Calendar
+import java.util.Date
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
@@ -30,9 +33,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         }
 
         lifecycleScope.launch {
-            for (i in 0..1000) {
-                delay(java.time.Duration.ofMillis(500))
-                mViewModel?.data?.emit("2233 -> $i")
+            val calendar = Calendar.getInstance()
+            while (true) {
+                calendar.timeInMillis = System.currentTimeMillis()
+                mViewModel?.data?.emit("${Date()}\n${calendar.time}\n${calendar}")
+                delay(java.time.Duration.ofMillis(1000))
             }
         }
 
@@ -41,7 +46,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             .commit()
 
         observe(mViewModel?.getContentUri) {
-            mBinding.iv.setImageURI(it)
+//            mBinding.iv.setImageURI(it)
             val view = ZoomImageView(this)
             view.layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -51,7 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             view.scaleType = ImageView.ScaleType.CENTER
             BaseDialogFragment(layoutView = view) { vh ->
                 (vh.root as? ImageView)?.setImageURI(it)
-            }.show(supportFragmentManager)
+            }.setDimAmount(1f).setHeight(-1).show(supportFragmentManager)
         }
     }
 

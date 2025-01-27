@@ -117,7 +117,7 @@ open class BaseDialogFragment(
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, android.R.style.Theme_Wallpaper_NoTitleBar_Fullscreen)
+        setStyle(STYLE_NORMAL, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
 
         //恢复保存的数据
         if (savedInstanceState != null) {
