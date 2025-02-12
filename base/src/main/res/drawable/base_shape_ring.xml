@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <transition>
+            <item>
+                <shape android:shape="ring" android:useLevel="true">
+
+                    <corners android:bottomLeftRadius="@dimen/dp_8" android:bottomRightRadius="@dimen/dp_8" android:radius="@dimen/dp_64" android:topLeftRadius="@dimen/dp_8" android:topRightRadius="@dimen/dp_8" />
+
+                    <gradient android:angle="-90" android:centerColor="@color/teal_50" android:centerX="0.5" android:centerY="0.5" android:endColor="@color/red_a700" android:gradientRadius="@dimen/dp_32" android:startColor="@color/pink_300" android:type="radial" />
+
+                    <padding android:top="@dimen/dp_80" />
+
+                    <size android:width="@dimen/dp_128" android:height="@dimen/dp_64" />
+
+                    <!--                    <solid android:color="@color/orangeDarker_a900" />-->
+
+                    <stroke android:width="@dimen/dp_8" android:color="@color/cyan_50" android:dashWidth="@dimen/dp_1" android:dashGap="@dimen/dp_10" />
+                </shape>
+            </item>
+        </transition>
+    </item>
+</selector>

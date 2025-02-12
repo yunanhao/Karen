@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -64,10 +64,22 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:contentDescription="@string/app_name"
-            android:src="@android:drawable/btn_star"
+            android:src="@drawable/base_shape_ring"
             app:elevation="30dp"
             tools:rotation="0" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="80000"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/dp_128" />
+
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 </layout>
 
