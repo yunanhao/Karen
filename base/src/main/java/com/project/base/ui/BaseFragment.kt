@@ -15,7 +15,12 @@ import java.lang.reflect.Type
 abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : AppCompatDialogFragment(),
     IArgumentsFromBundle {
 
-    abstract val mBinding: VB
+    private var viewBinding: VB? = null
+
+    val mBinding: VB
+        get() = checkNotNull(viewBinding) { "Binding is only available while the fragment view exists" }
+
+    abstract fun inflateBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
     var mViewModel: VM? = null
 
@@ -59,7 +64,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : AppCompatDialogF
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // 加载布局
+        viewBinding = inflateBinding(inflater, container)
         return mBinding.root
     }
 
@@ -90,7 +95,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : ViewModel> : AppCompatDialogF
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // 清理视图绑定
+        viewBinding = null
     }
 
     override fun onDestroy() {

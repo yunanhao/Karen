@@ -19,9 +19,7 @@ import androidx.fragment.app.FragmentManager
 import com.project.base.R
 
 open class BaseDialogFragment(
-    private val layoutId: Int? = null,
-    private val layoutView: View? = null,
-    private val convertView: ((holder: ViewHolder) -> Unit)?
+    private var layoutId: Int = 0
 ) : AppCompatDialogFragment() {
     class ViewHolder(val root: View, private val dialogFragment: BaseDialogFragment) {
         val childViews by lazy {
@@ -79,6 +77,7 @@ open class BaseDialogFragment(
         const val CANCEL = "out_cancel"
         const val ANIM = "anim_style"
         const val THEME = "theme"
+        private const val LAYOUT_ID = "layout_id"
 
         fun Float.dp2px(context: Context?): Int {
             context ?: return this.toInt()
@@ -117,12 +116,10 @@ open class BaseDialogFragment(
     private var animStyle: Int = 0
 
     @StyleRes
-    private var theme: Int = android.R.style.Theme_Wallpaper_NoTitleBar_Fullscreen // dialog主题
+    private var theme: Int = R.style.base_NiceDialogStyle // dialog主题
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, theme)
-
         //恢复保存的数据
         if (savedInstanceState != null) {
             marginHorizontal = savedInstanceState.getInt(MARGIN_HORIZONTAL)
@@ -134,7 +131,9 @@ open class BaseDialogFragment(
             outCancelable = savedInstanceState.getBoolean(CANCEL)
             animStyle = savedInstanceState.getInt(ANIM)
             theme = savedInstanceState.getInt(THEME)
+            layoutId = savedInstanceState.getInt(LAYOUT_ID)
         }
+        setStyle(STYLE_NORMAL, theme)
     }
 
     override fun onCreateView(
@@ -142,15 +141,17 @@ open class BaseDialogFragment(
         @Nullable container: ViewGroup?,
         @Nullable savedInstanceState: Bundle?
     ): View {
-        val view: View? = if (layoutId != null) {
-            inflater.inflate(layoutId, container, false)
-        } else {
-            layoutView
-        }
-        if (view == null) throw NullPointerException("layoutId and layoutView is null")
-        convertView?.invoke(ViewHolder(view, this))
+        val view = createContentView(inflater, container)
+        bindContent(ViewHolder(view, this))
         return view
     }
+
+    protected open fun createContentView(inflater: LayoutInflater, container: ViewGroup?): View {
+        check(layoutId != 0) { "A layout resource or createContentView override is required" }
+        return inflater.inflate(layoutId, container, false)
+    }
+
+    protected open fun bindContent(holder: ViewHolder) {}
 
     override fun onStart() {
         super.onStart()
@@ -173,6 +174,7 @@ open class BaseDialogFragment(
         outState.putBoolean(CANCEL, outCancelable)
         outState.putInt(ANIM, animStyle)
         outState.putInt(THEME, theme)
+        outState.putInt(LAYOUT_ID, layoutId)
     }
 
     private fun initParams() {
@@ -214,8 +216,6 @@ open class BaseDialogFragment(
         //设置dialog进入、退出的动画
         window.setWindowAnimations(animStyle)
         window.attributes = lp
-        // 设置全屏
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 //        window.setFlags(
 //            WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //            WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -275,12 +275,8 @@ open class BaseDialogFragment(
     }
 
     fun show(manager: FragmentManager): BaseDialogFragment {
-        val ft = manager.beginTransaction()
-        if (this.isAdded) {
-            ft.remove(this).commit()
-        }
-        ft.add(this, System.currentTimeMillis().toString())
-        ft.commitAllowingStateLoss()
+        if (isAdded || manager.isStateSaved) return this
+        super.show(manager, java.util.UUID.randomUUID().toString())
         return this
     }
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
@@ -90,13 +91,12 @@ public final class HttpsUtil {
                 connection.setRequestProperty("Content-Type", "application/json");
             } else {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestProperty("Content-Length", data.length() + "");
             }
-            connection.connect();
-
             if (post) {
+                byte[] body = (data == null ? "" : data).getBytes(StandardCharsets.UTF_8);
+                connection.setFixedLengthStreamingMode(body.length);
+                connection.connect();
                 os = new DataOutputStream(connection.getOutputStream());
-                byte[] body = data.getBytes(java.nio.charset.StandardCharsets.UTF_8);
                 os.write(body);
                 os.flush();
                 os.close();
@@ -104,7 +104,7 @@ public final class HttpsUtil {
             }
 
             is = connection.getInputStream();
-            Scanner scan = new Scanner(is);
+            Scanner scan = new Scanner(is, StandardCharsets.UTF_8.name());
             scan.useDelimiter("\\A");
             if (scan.hasNext()) return scan.next();
         } catch (Exception e) {
