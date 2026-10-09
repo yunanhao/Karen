@@ -11,7 +11,7 @@ class BaseApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         lateinit var appContext: BaseApplication
         @SuppressLint("StaticFieldLeak")
-        lateinit var currentActivity: Activity
+        var currentActivity: java.lang.ref.WeakReference<Activity>? = null
 
     }
     
@@ -34,7 +34,7 @@ class BaseApplication : Application() {
             }
 
             override fun onActivityResumed(activity: Activity) {
-                currentActivity = activity
+                currentActivity = java.lang.ref.WeakReference(activity)
             }
 
             override fun onActivityPaused(activity: Activity) {
@@ -50,7 +50,7 @@ class BaseApplication : Application() {
             }
 
             override fun onActivityDestroyed(activity: Activity) {
-                
+                if (currentActivity?.get() === activity) currentActivity = null
             }
 
         })
