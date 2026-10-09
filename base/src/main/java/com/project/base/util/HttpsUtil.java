@@ -79,7 +79,7 @@ public final class HttpsUtil {
             }
             //允许输入输出
             connection.setDoInput(true);
-            connection.setDoOutput(true);
+            connection.setDoOutput(post);
             // 是否使用缓冲
             connection.setUseCaches(false);
             // 本次连接是否处理重定向，设置成true，系统自动处理重定向；
@@ -94,10 +94,14 @@ public final class HttpsUtil {
             }
             connection.connect();
 
-            os = new DataOutputStream(connection.getOutputStream());
-            os.write(data.getBytes(), 0, data.getBytes().length);
-            os.flush();
-            os.close();
+            if (post) {
+                os = new DataOutputStream(connection.getOutputStream());
+                byte[] body = data.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+                os.write(body);
+                os.flush();
+                os.close();
+                os = null;
+            }
 
             is = connection.getInputStream();
             Scanner scan = new Scanner(is);
