@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
@@ -79,7 +80,7 @@ public final class HttpsUtil {
             }
             //允许输入输出
             connection.setDoInput(true);
-            connection.setDoOutput(true);
+            connection.setDoOutput(post);
             // 是否使用缓冲
             connection.setUseCaches(false);
             // 本次连接是否处理重定向，设置成true，系统自动处理重定向；
@@ -90,17 +91,20 @@ public final class HttpsUtil {
                 connection.setRequestProperty("Content-Type", "application/json");
             } else {
                 connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                connection.setRequestProperty("Content-Length", data.length() + "");
             }
-            connection.connect();
-
-            os = new DataOutputStream(connection.getOutputStream());
-            os.write(data.getBytes(), 0, data.getBytes().length);
-            os.flush();
-            os.close();
+            if (post) {
+                byte[] body = (data == null ? "" : data).getBytes(StandardCharsets.UTF_8);
+                connection.setFixedLengthStreamingMode(body.length);
+                connection.connect();
+                os = new DataOutputStream(connection.getOutputStream());
+                os.write(body);
+                os.flush();
+                os.close();
+                os = null;
+            }
 
             is = connection.getInputStream();
-            Scanner scan = new Scanner(is);
+            Scanner scan = new Scanner(is, StandardCharsets.UTF_8.name());
             scan.useDelimiter("\\A");
             if (scan.hasNext()) return scan.next();
         } catch (Exception e) {
