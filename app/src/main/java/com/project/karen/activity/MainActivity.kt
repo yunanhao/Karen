@@ -57,9 +57,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         }
 
-        supportFragmentManager.beginTransaction()
-            .add(mBinding.fragmentContainerPanel.id, MainFragment())
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(mBinding.fragmentContainerPanel.id, MainFragment())
+                .commit()
+        }
 
         observe(mViewModel?.getContentUri) {
 //            mBinding.iv.setImageURI(it)

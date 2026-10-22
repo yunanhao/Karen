@@ -6,6 +6,8 @@ import android.view.View
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import com.project.app.databinding.FragmentMainBinding
 import com.project.base.ui.BaseFragment
 import com.project.karen.viewmodel.MainViewModel
@@ -27,14 +29,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainViewModel>() {
         mBinding.kiComposeView.setBackgroundColor(0xAA990066.toInt())
 
         mBinding.tv.text = mViewModel?.toString()
-        lifecycleScope.launch {
-            mViewModel?.data?.collectLatest {
-                mBinding.tv.text = it
-            }
-        }
-        lifecycleScope.launch {
-            mViewModel?.count?.collectLatest {
-                mBinding.tv.background.level = it
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    mViewModel?.data?.collectLatest { mBinding.tv.text = it }
+                }
+                launch {
+                    mViewModel?.count?.collectLatest { mBinding.tv.background.level = it }
+                }
             }
         }
     }
